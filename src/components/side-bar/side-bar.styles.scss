@@ -1,0 +1,52 @@
+
+.side-bar {
+    padding: 25px;
+    width: 30vw;
+    height: 100vh;
+
+    .logo {
+        display: flex;
+        margin-bottom: 15px;
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+
+            .find {
+                color: #be4bdb;
+            }
+        }
+
+        i {
+            font-size: 23px;
+            margin-right: 8px;
+        }
+    }
+
+    .search-bar {
+        position: relative;
+
+        input {
+            background-color: #fafafa;
+            border-radius: 25px;
+            padding: 14px 25px;
+            width: 100%;
+
+            &:focus ~ .search-button i {
+                color: #be4bdb;
+                transition: color 200ms linear;
+            }
+        }
+
+        .search-button {
+            position: absolute;
+            right: 25px;
+            top: 13px;
+
+            i {
+                font-size: 16px;
+                transition: color 200ms linear;
+            }
+        }
+    }
+}
