@@ -1,29 +1,27 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import './side-bar.styles.scss';
 
-const SideBar = () => {
-    const searchInput = useRef();
+import SearchResult from '../search-result/search-result.component';
+import CustomSelect from '../custom-select/custom-select.component';
 
-    useEffect(() => {
-        searchInput.current.focus();
-    }, []);
+const SideBar = () => {
 
     return (
         <div className='side-bar'>
-            <div className='logo'>
-                <i className='fas fa-ice-cream'></i>
-                <h1>sweet <span className='find'>find</span></h1>
-            </div>
-            <div className='search-bar'>
-                <input 
-                    ref={searchInput}
-                    type='text' 
-                    placeholder='Enter your address or zip code' 
-                />
-                <div className='search-button'>
-                    <i className='fas fa-search'></i>
+            <div className='logo-search-bar'>
+                <div className='logo'>
+                    <i className='fas fa-ice-cream'></i>
+                    <h1>sweet <span className='find'>find</span></h1>
                 </div>
+                <CustomSelect
+                    options={['All', 'Coffee', 'Tea', 'Cake', 'Smoothie', 'Ice Cream', 'Frozen Yogurt', 'Bubble Tea']}
+                />
+                <CustomSelect
+                    options={['Rating', 'Distance']}
+                    initial='Sort by'
+                />
             </div>
+            <SearchResult />
         </div>
     )
 }

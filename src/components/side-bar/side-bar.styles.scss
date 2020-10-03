@@ -1,52 +1,93 @@
 
 .side-bar {
-    padding: 25px;
-    width: 30vw;
+    width: 35vw;
     height: 100vh;
 
-    .logo {
-        display: flex;
-        margin-bottom: 15px;
+    .logo-search-bar {
+        height: 140px;
+        padding: 30px 20px;
 
-        h1 {
-            font-size: 28px;
-            font-weight: 700;
+        .logo {
+            display: flex;
+            margin: 0 10px;
+            margin-bottom: 20px;
 
-            .find {
-                color: #be4bdb;
+            h1 {
+                font-size: 28px;
+                font-weight: 700;
+
+                .find {
+                    color: #be4bdb;
+                }
             }
-        }
-
-        i {
-            font-size: 23px;
-            margin-right: 8px;
-        }
-    }
-
-    .search-bar {
-        position: relative;
-
-        input {
-            background-color: #fafafa;
-            border-radius: 25px;
-            padding: 14px 25px;
-            width: 100%;
-
-            &:focus ~ .search-button i {
-                color: #be4bdb;
-                transition: color 200ms linear;
-            }
-        }
-
-        .search-button {
-            position: absolute;
-            right: 25px;
-            top: 13px;
 
             i {
-                font-size: 16px;
-                transition: color 200ms linear;
+                font-size: 23px;
+                margin-right: 8px;
+            }
+        }
+
+        .search-bar {
+            position: relative;
+
+            input {
+                background-color: #fafafa;
+                border-radius: 25px;
+                padding: 14px 25px;
+                width: 100%;
+                margin-bottom: 10px;
+
+                &:focus ~ .search-button i {
+                    color: #be4bdb;
+                    transition: color 200ms linear;
+                }
+            }
+
+            .search-button {
+                position: absolute;
+                right: 25px;
+                top: 13px;
+
+                i {
+                    font-size: 16px;
+                    transition: color 200ms linear;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .checkboxes {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 5px 10px;
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+  .side-bar {
+    width: 100vw;
+    padding-top: 195px;
+
+    .logo-search-bar {
+        height: auto;
+        padding: 10px 20px;
+        text-align: right;
+        
+        .logo {
+            display: inline-block;
+            float: left;
+            margin: 0;
+            margin-top: 10px;
+
+            h1 {
+                font-size: 24px;
+            }
+
+            i {
+                display: none;
             }
         }
     }
+  }
 }

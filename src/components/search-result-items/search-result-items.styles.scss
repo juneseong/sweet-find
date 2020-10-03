@@ -1,0 +1,68 @@
+.place {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    background-color: #fff;
+    transition: background-color 200ms linear;
+
+    &:hover {
+        background-color: #fafafa;
+        transition: background-color 200ms linear;
+    }
+
+    &:active .place-info {
+        transform: scale(.99);
+    }
+
+    .place-photo {
+        width: 90px;
+        height: 90px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        margin-right: 18px;
+        margin: 20px;
+    }
+
+    .place-info {
+        margin: auto 0;
+        position: relative;
+        width: calc(100% - 130px);
+
+        .name {
+            font-size: 15px;
+            margin: 8px 0;
+            font-weight: 500;
+        }
+
+        .distance {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 14px 8px 14px;
+            background-color: #fff;
+            border: 1px solid #eee;
+            border-radius: 30px;
+            display: inline-block;
+            color: #333;
+            
+            i {
+                margin-right: 3px;
+            }
+        }
+
+        .rating {
+            position: absolute;
+            right: 20px;
+            text-align: right;
+            padding: 11px;
+            background-color: #eee;
+            border-radius: 50px;
+            font-weight: 500;
+            margin-top: 12px;
+
+            &.high {
+                color: #b83bd8;
+                background-color: #f9eefc;
+            }
+        }
+    } 
+}

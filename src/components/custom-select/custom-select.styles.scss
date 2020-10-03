@@ -1,0 +1,30 @@
+.custom-select {
+    display: inline-block;
+    padding: 13px 15px;
+    border: 1px solid #eee;
+    border-radius: 30px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: background-color 200ms linear;
+    font-weight: 600;
+
+    &:hover {
+        background-color: #fafafa;
+        transition: background-color 200ms linear;
+    }
+
+    &:active {
+        transform: scale(.98);
+    }
+
+    i {
+        margin-left: 3px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+  .custom-select {
+      margin-right: 0;
+      margin-left: 10px;
+  }
+}
