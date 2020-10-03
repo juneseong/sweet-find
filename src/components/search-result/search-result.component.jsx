@@ -1,10 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import './search-result.styles.scss';
 import SearchResultItems from '../search-result-items/search-result-items.component';
 
-const SearchResult = ({ places }) => {
+const SearchResult = () => {
+    const places = Object.values(useSelector(state => state.places));
+
     const results = places.map(place => (
         <li key={place.place_id}><SearchResultItems place={place} /></li>
     ));
@@ -19,8 +21,4 @@ const SearchResult = ({ places }) => {
     )
 }
 
-const mapStateToProps = state => ({
-    places: Object.values(state.places)
-});
-
-export default connect(mapStateToProps)(SearchResult);
+export default SearchResult;

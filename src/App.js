@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import './App.css';
 
 import SideBar from './components/side-bar/side-bar.component';
 import GoogleMap from './components/google-map/google-map.component';
-import { receivePlaces } from './redux/place/place.actions';
-import { receiveCurrentPosition } from './redux/current-position/current-position.actions';
+import { RECEIVE_CURRENT_POSITION } from './redux/current-position/current-position.actions';
+import { RECEIVE_PLACES } from './redux/place/place.actions';
 
-const App = ({ receivePlaces, receiveCurrentPosition }) => {
+const App = () => {
   const [map, setMap] = useState();
   const [currentPosition, setCurrentPosition] = useState();
   const [status, setStatus] = useState('loading');
+  const dispatch = useDispatch();
+
+  const receivePlaces = places => dispatch({ type: RECEIVE_PLACES, places });
+  const receiveCurrentPosition = position => dispatch({ type: RECEIVE_CURRENT_POSITION, position });
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -100,9 +104,4 @@ const App = ({ receivePlaces, receiveCurrentPosition }) => {
   );
 }
 
-const mapDispatchToProps = dispatch => ({
-  receivePlaces: places => dispatch(receivePlaces(places)),
-  receiveCurrentPosition: position => dispatch(receiveCurrentPosition(position))
-});
-
-export default connect(null, mapDispatchToProps)(App);
+export default App;
