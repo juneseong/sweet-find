@@ -2,7 +2,13 @@ import React from 'react';
 
 import './custom-checkbox.styles.scss';
 
-const CustomCheckbox = ({ children, checked, setCheck }) => {
+interface CustomCheckboxProps {
+    children: string;
+    checked: boolean;
+    setCheck(value: boolean): void;
+}
+
+const CustomCheckbox: React.FC<CustomCheckboxProps> = ({ children, checked, setCheck }) => {
     const check = () => {
         if (checked) {
             return (
@@ -11,10 +17,12 @@ const CustomCheckbox = ({ children, checked, setCheck }) => {
                 </div>
             )
         }
+
+        return;
     }
 
     return (
-        <div 
+        <div
             className='checkbox-container'
             onClick={() => setCheck(!checked)}>
             <div className='checkbox'>

@@ -2,7 +2,11 @@ import React from 'react';
 
 import './google-map.styles.scss';
 
-const GoogleMap = ({ status }) => {
+interface GoogleMapProps {
+    status: string
+}
+
+const GoogleMap: React.FC<GoogleMapProps> = ({ status }) => {
 
     return (
         <div className={`map-container ${status}`}>

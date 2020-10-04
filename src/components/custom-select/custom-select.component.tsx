@@ -1,7 +1,12 @@
 import React from 'react';
 import './custom-select.styles.scss';
 
-const CustomSelect = ({ options, initial }) => {
+interface CustomSelectProps {
+    options: Array<string>;
+    initial: string;
+}
+
+const CustomSelect: React.FC<CustomSelectProps> = ({ options, initial }) => {
     initial = initial ? initial : options[0];
 
     return (
