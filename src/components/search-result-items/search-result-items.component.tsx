@@ -2,13 +2,18 @@ import React from 'react';
 
 import './search-result-items.styles.scss';
 
-const SearchResultItems = ({ place }) => {
+import { PlaceType } from '../../redux/place/place.actions';
 
+interface SearchResultItemsProps {
+    place: PlaceType
+}
+
+const SearchResultItems: React.FC<SearchResultItemsProps> = ({ place }) => {
     const name = place.name.split(' ').map(name => (
         name[0].toUpperCase() + name.slice(1).toLowerCase()
     )).join(' ');
 
-    if (place.photos) {
+    if (place.photos && place.rating) {
         return (
             <div className='place'>
                 <div
@@ -27,7 +32,7 @@ const SearchResultItems = ({ place }) => {
             </div>
         )
     } else {
-        return null
+        return null;
     }
 }
 

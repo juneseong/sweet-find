@@ -1,6 +1,10 @@
-import { RECEIVE_PLACES } from './place.actions';
+import { RECEIVE_PLACES, Action, PlaceType } from './place.actions';
 
-const placeReducer = (state = {}, action) => {
+export interface PlaceState {
+    places: PlaceType;
+}
+
+const placeReducer = (state = {}, action: Action) => {
     Object.freeze(state);
 
     switch (action.type) {

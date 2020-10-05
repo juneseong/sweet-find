@@ -6,12 +6,10 @@ import './App.css';
 import SideBar from './components/side-bar/side-bar.component';
 import GoogleMap from './components/google-map/google-map.component';
 import { RECEIVE_CURRENT_POSITION, CurrentPositionType } from './redux/current-position/current-position.actions';
-import { RECEIVE_PLACES } from './redux/place/place.actions';
-
-declare const google: any;
+import { RECEIVE_PLACES, PlaceType } from './redux/place/place.actions';
 
 const App = () => {
-  const [map, setMap] = useState();
+  const [map, setMap] = useState<any | null>(null);
   const [currentPosition, setCurrentPosition] = useState<CurrentPositionType | null>(null);
   const [status, setStatus] = useState('loading');
   const dispatch = useDispatch();
@@ -36,17 +34,17 @@ const App = () => {
     const mapNode = document.getElementById('map');
 
     const onLoad = () => {
-      if (currentPosition) {
+      if (currentPosition && mapNode) {
         setStatus('success');
         receiveCurrentPosition(currentPosition);
 
         const { lat, lng } = currentPosition;
-        const center = new google.maps.LatLng(lat, lng);
-        setMap(new google.maps.Map(mapNode, { center, zoom: 15 }));
+        const center = new window.google.maps.LatLng(lat, lng);
+        setMap(new window.google.maps.Map(mapNode, { center, zoom: 15 }));
       }
     };
 
-    if (!google) {
+    if (!window.google) {
       const apiKey = process.env.REACT_APP_API_KEY;
       const script = document.createElement('script');
       script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
@@ -66,28 +64,28 @@ const App = () => {
   useEffect(() => {
     if (currentPosition && map) {
       const { lat, lng } = currentPosition;
-      const location = new google.maps.LatLng(lat, lng);
-      const radius = '1000';
+      const location = new window.google.maps.LatLng(lat, lng);
+      const radius = 1000;
       const types = ['cafe', 'bakery'];
       const request = { location, radius, types, keyword: 'coffee' };
-      const service = new google.maps.places.PlacesService(map);
+      const service = new window.google.maps.places.PlacesService(map);
 
-      service.nearbySearch(request, (places: any, status: boolean) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
+      service.nearbySearch(request, (places, status) => {
+        if (status === window.google.maps.places.PlacesServiceStatus.OK) {
           receivePlaces(places);
 
-          const createMarker = (place: any) => {
+          const createMarker = (place: PlaceType) => {
 
-            const marker = new google.maps.Marker({
+            const marker = new window.google.maps.Marker({
               map,
               title: place.name,
               position: place.geometry.location
             });
 
-            const infoWindow = new google.maps.InfoWindow();
+            const infoWindow = new window.google.maps.InfoWindow();
 
-            google.maps.event.addListener(marker, 'click', () => {
-              infoWindow.setContent(marker.title);
+            window.google.maps.event.addListener(marker, 'click', () => {
+              infoWindow.setContent(place.name);
               infoWindow.open(map, marker);
             });
           };

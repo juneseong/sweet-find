@@ -3,7 +3,7 @@ import './custom-select.styles.scss';
 
 interface CustomSelectProps {
     options: Array<string>;
-    initial: string;
+    initial?: string;
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = ({ options, initial }) => {

@@ -1,6 +1,6 @@
-import { RECEIVE_CURRENT_POSITION } from './current-position.actions';
+import { RECEIVE_CURRENT_POSITION, Action } from './current-position.actions';
 
-const currentPositionReducer = (state = {}, action) => {
+const currentPositionReducer = (state = {}, action: Action) => {
     Object.freeze(state);
 
     switch (action.type) {
