@@ -25,8 +25,14 @@ const SearchResultItems: React.FC<SearchResultItemsProps> = ({ place }) => {
     const handleClick = () => {
         if (activeInfoWindow) activeInfoWindow.close();
 
+        const icon = {
+            url: 'https://img.icons8.com/office/40/000000/marker.png',
+            scaledSize: new google.maps.Size(40, 40)
+        }
+
         const marker = new window.google.maps.Marker({
             map,
+            icon,
             title: place.name,
             position: place.geometry.location
         });

@@ -10,7 +10,7 @@ const SideBar = () => {
         <div className='side-bar'>
             <div className='logo-search-bar'>
                 <div className='logo'>
-                    <i className='fas fa-ice-cream'></i>
+                    <img src="https://img.icons8.com/office/40/000000/ice-cream-cone.png" width="40px" height="40px" />
                     <h1>sweet <span className='find'>find</span></h1>
                 </div>
                 <CustomSelect
