@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './App.css';
 
@@ -7,15 +7,21 @@ import SideBar from './components/side-bar/side-bar.component';
 import GoogleMap from './components/google-map/google-map.component';
 import { RECEIVE_CURRENT_POSITION, CurrentPositionType } from './redux/current-position/current-position.actions';
 import { RECEIVE_PLACES, PlaceType } from './redux/place/place.actions';
+import { RECEIVE_MAP } from './redux/map/map.actions';
+import { RECEIVE_ACTIVE_INFO_WINDOW } from './redux/map/map.actions';
+import { InfoWindowState } from './redux/map/map.reducer';
 
 const App = () => {
   const [map, setMap] = useState<any | null>(null);
   const [currentPosition, setCurrentPosition] = useState<CurrentPositionType | null>(null);
+  const [clickedMarker, setClickedMarker] = useState<any>(null);
   const [status, setStatus] = useState('loading');
   const dispatch = useDispatch();
-
   const receivePlaces = (places: any) => dispatch({ type: RECEIVE_PLACES, places });
+  const receiveMap = (map: any) => dispatch({ type: RECEIVE_MAP, map });
   const receiveCurrentPosition = (position: CurrentPositionType) => dispatch({ type: RECEIVE_CURRENT_POSITION, position });
+  const receiveActiveInfoWindow = (infoWindow: any) => dispatch({ type: RECEIVE_ACTIVE_INFO_WINDOW, infoWindow });
+  const activeInfoWindow = useSelector<InfoWindowState, InfoWindowState['map']>(state => state.map.infoWindow);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -39,8 +45,19 @@ const App = () => {
         receiveCurrentPosition(currentPosition);
 
         const { lat, lng } = currentPosition;
-        const center = new window.google.maps.LatLng(lat, lng);
-        setMap(new window.google.maps.Map(mapNode, { center, zoom: 15 }));
+        const options = {
+          center: new window.google.maps.LatLng(lat, lng),
+          zoom: 16,
+          scrollwheel: false,
+          navigationControl: false,
+          mapTypeControl: false,
+          scaleControl: false,
+          draggable: false
+        }
+
+        const newMap = new window.google.maps.Map(mapNode, options);
+        setMap(newMap);
+        receiveMap(newMap);
       }
     };
 
@@ -70,34 +87,43 @@ const App = () => {
       const request = { location, radius, types, keyword: 'coffee' };
       const service = new window.google.maps.places.PlacesService(map);
 
+      const handleClick = (place: PlaceType) => {
+        const marker = new window.google.maps.Marker({
+          map,
+          title: place.name,
+          position: place.geometry.location
+        });
+
+        window.google.maps.event.addListener(marker, 'click', () => {
+          setClickedMarker({ marker, place });
+        });
+      }
+
       service.nearbySearch(request, (places, status) => {
         if (status === window.google.maps.places.PlacesServiceStatus.OK) {
           receivePlaces(places);
 
-          const createMarker = (place: PlaceType) => {
-
-            const marker = new window.google.maps.Marker({
-              map,
-              title: place.name,
-              position: place.geometry.location
-            });
-
-            const infoWindow = new window.google.maps.InfoWindow();
-
-            window.google.maps.event.addListener(marker, 'click', () => {
-              infoWindow.setContent(place.name);
-              infoWindow.open(map, marker);
-            });
-          };
-
           for (let i = 0; i < places.length; i++) {
             const place = places[i];
-            createMarker(place);
+            handleClick(place);
           }
         }
       });
     }
   }, [map]);
+
+  useEffect(() => {
+    if (clickedMarker) {
+      const { marker, place } = clickedMarker;
+      const infoWindow = new window.google.maps.InfoWindow();
+
+      if (activeInfoWindow) activeInfoWindow.close();
+
+      infoWindow.setContent(place.name);
+      infoWindow.open(map, marker);
+      receiveActiveInfoWindow(infoWindow);
+    }
+  }, [clickedMarker]);
 
   return (
     <div className='app'>

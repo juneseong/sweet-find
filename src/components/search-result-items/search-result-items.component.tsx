@@ -1,21 +1,46 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './search-result-items.styles.scss';
 
 import { PlaceType } from '../../redux/place/place.actions';
+import { RECEIVE_ACTIVE_INFO_WINDOW } from '../../redux/map/map.actions';
+import { MapState, InfoWindowState } from '../../redux/map/map.reducer';
 
 interface SearchResultItemsProps {
-    place: PlaceType
+    place: PlaceType;
 }
 
 const SearchResultItems: React.FC<SearchResultItemsProps> = ({ place }) => {
+    const dispatch = useDispatch();
+
     const name = place.name.split(' ').map(name => (
         name[0].toUpperCase() + name.slice(1).toLowerCase()
     )).join(' ');
 
+    const map = useSelector<MapState, MapState['map']>(state => state.map.map);
+    const activeInfoWindow = useSelector<InfoWindowState, InfoWindowState['map']>(state => state.map.infoWindow);
+    const receiveActiveInfoWindow = (infoWindow: any) => dispatch({ type: RECEIVE_ACTIVE_INFO_WINDOW, infoWindow });
+
+    const handleClick = () => {
+        if (activeInfoWindow) activeInfoWindow.close();
+
+        const marker = new window.google.maps.Marker({
+            map,
+            title: place.name,
+            position: place.geometry.location
+        });
+
+        const infoWindow = new window.google.maps.InfoWindow();
+
+        infoWindow.setContent(place.name);
+        infoWindow.open(map, marker);
+        receiveActiveInfoWindow(infoWindow);
+    }
+
     if (place.photos && place.rating) {
         return (
-            <div className='place'>
+            <div className='place' onClick={handleClick}>
                 <div
                     className='place-photo'
                     style={{ backgroundImage: `url(${place.photos[0].getUrl()})` }}
