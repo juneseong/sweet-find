@@ -87,7 +87,7 @@ const App = () => {
       const request = { location, radius, types, keyword: 'coffee' };
       const service = new window.google.maps.places.PlacesService(map);
 
-      const handleClick = (place: PlaceType) => {
+      const createMarker = (place: PlaceType) => {
         const marker = new window.google.maps.Marker({
           map,
           title: place.name,
@@ -105,7 +105,7 @@ const App = () => {
 
           for (let i = 0; i < places.length; i++) {
             const place = places[i];
-            handleClick(place);
+            createMarker(place);
           }
         }
       });
@@ -119,7 +119,17 @@ const App = () => {
 
       if (activeInfoWindow) activeInfoWindow.close();
 
-      infoWindow.setContent(place.name);
+      const contentString = `
+        <div style='background-image: url(${place.photos[0].getUrl()}); 
+          background-size: 100%;
+          width: 100px; 
+          height: 100px;'>
+        </div>
+        <h1>${place.name}</h1>
+        <h2>${place.rating}</h2>
+      `
+
+      infoWindow.setContent(contentString);
       infoWindow.open(map, marker);
       receiveActiveInfoWindow(infoWindow);
     }
