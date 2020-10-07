@@ -8,8 +8,10 @@ import { PlaceState } from '../../redux/place/place.reducer';
 const SearchResult = () => {
     const places = Object.values(useSelector<PlaceState, PlaceState['places']>(state => state.places));
 
-    const results = places.map(place => (
-        <li key={place.place_id}><SearchResultItems place={place} /></li>
+    const results = places.map((place, i) => (
+        <li key={place.place_id}>
+            <SearchResultItems place={place} number={i + 1} />
+        </li>
     ));
 
     return (

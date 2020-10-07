@@ -3,63 +3,27 @@
     width: 35vw;
     height: 100vh;
 
-    .logo-search-bar {
-        height: 140px;
-        padding: 30px 20px;
+    .logo-container {
+        height: 90px;
+        padding: 25px 20px;
+        display: flex;
+        justify-content: space-between;
 
         .logo {
             display: flex;
-            margin: 0 10px;
-            margin-bottom: 20px;
 
             h1 {
-                font-size: 28px;
+                font-family: 'Raleway', sans-serif;
+                font-size: 26px;
                 font-weight: 700;
-
-                .find {
-                    color: #be4bdb;
-                }
+                line-height: 40px;
             }
 
-            i {
-                font-size: 23px;
-                margin-right: 8px;
+            img {
+                margin-right: 3px;
+                width: 40px;
+                height: 40px;
             }
-        }
-
-        .search-bar {
-            position: relative;
-
-            input {
-                background-color: #fafafa;
-                border-radius: 25px;
-                padding: 14px 25px;
-                width: 100%;
-                margin-bottom: 10px;
-
-                &:focus ~ .search-button i {
-                    color: #be4bdb;
-                    transition: color 200ms linear;
-                }
-            }
-
-            .search-button {
-                position: absolute;
-                right: 25px;
-                top: 13px;
-
-                i {
-                    font-size: 16px;
-                    transition: color 200ms linear;
-                    cursor: pointer;
-                }
-            }
-        }
-
-        .checkboxes {
-            display: flex;
-            flex-wrap: wrap;
-            padding: 5px 10px;
         }
     }
 }
@@ -69,14 +33,13 @@
     width: 100vw;
     padding-top: 195px;
 
-    .logo-search-bar {
+    .logo-container {
         height: auto;
         padding: 10px 20px;
         text-align: right;
         
         .logo {
             display: inline-block;
-            float: left;
             margin: 0;
             margin-top: 10px;
 

@@ -1,13 +1,26 @@
 .place {
     display: flex;
-    border-bottom: 1px solid #eee;
     cursor: pointer;
     background-color: #fff;
     transition: background-color 200ms linear;
+    margin: 0 20px;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    transition: box-shadow 300ms;
+
+    &.active {
+        background-color: #fafafa;
+    }
 
     &:hover {
-        background-color: #fafafa;
         transition: background-color 200ms linear;
+        box-shadow: 0 0 10px rgba(0,0,0,.1);
+        transition: box-shadow 300ms;
+    }
+
+    &:active {
+        background-color: #fafafa;
     }
 
     &:active .place-info {
@@ -21,47 +34,38 @@
         background-repeat: no-repeat;
         margin-right: 18px;
         margin: 20px;
+        border-radius: 5px;
     }
 
     .place-info {
         margin: auto 0;
-        position: relative;
+        padding-top: 10px;
         width: calc(100% - 130px);
+        display: flex;
+        justify-content: space-between;
 
-        .name {
-            font-size: 15px;
-            margin: 8px 0;
-            font-weight: 500;
-        }
+        .name-address {
+            .name {
+                margin-bottom: 5px;
+                font-size: 16px;
+                font-weight: 400;
+            }
 
-        .distance {
-            font-size: 12px;
-            font-weight: 600;
-            padding: 6px 14px 8px 14px;
-            background-color: #fff;
-            border: 1px solid #eee;
-            border-radius: 30px;
-            display: inline-block;
-            color: #333;
-            
-            i {
-                margin-right: 3px;
+            .address {
+                color: #666;
             }
         }
 
         .rating {
-            position: absolute;
-            right: 20px;
-            text-align: right;
+            margin-right: 20px;
             padding: 11px;
             background-color: #eee;
             border-radius: 50px;
             font-weight: 500;
-            margin-top: 12px;
 
             &.high {
-                color: #b83bd8;
-                background-color: #f9eefc;
+                color: #eb6262;
+                background-color: #fce6e6;
             }
         }
     } 

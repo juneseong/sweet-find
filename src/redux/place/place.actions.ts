@@ -5,6 +5,8 @@ export interface PlaceType {
     photos?: Array<any> | undefined;
     rating?: number | undefined;
     geometry?: any;
+    vicinity?: string;
+    place_id?: string;
 }
 
 type ReceivePlaces = {

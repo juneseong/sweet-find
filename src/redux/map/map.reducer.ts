@@ -1,4 +1,4 @@
-import { RECEIVE_MAP, RECEIVE_ACTIVE_INFO_WINDOW, Action } from './map.actions';
+import { RECEIVE_MAP, RECEIVE_ACTIVE_INFO_WINDOW, RECEIVE_ACTIVE_PLACE_ID, Action } from './map.actions';
 
 export interface MapState {
     map: any;
@@ -21,6 +21,11 @@ const mapReducer = (state = {}, action: Action) => {
             return {
                 ...state,
                 infoWindow: action.infoWindow
+            }
+        case RECEIVE_ACTIVE_PLACE_ID:
+            return {
+                ...state,
+                placeId: action.placeId
             }
         default:
             return state;

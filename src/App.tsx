@@ -7,8 +7,7 @@ import SideBar from './components/side-bar/side-bar.component';
 import GoogleMap from './components/google-map/google-map.component';
 import { RECEIVE_CURRENT_POSITION, CurrentPositionType } from './redux/current-position/current-position.actions';
 import { RECEIVE_PLACES, PlaceType } from './redux/place/place.actions';
-import { RECEIVE_MAP } from './redux/map/map.actions';
-import { RECEIVE_ACTIVE_INFO_WINDOW } from './redux/map/map.actions';
+import { RECEIVE_MAP, RECEIVE_ACTIVE_INFO_WINDOW, RECEIVE_ACTIVE_PLACE_ID } from './redux/map/map.actions';
 import { InfoWindowState } from './redux/map/map.reducer';
 
 const App = () => {
@@ -22,6 +21,7 @@ const App = () => {
   const receiveCurrentPosition = (position: CurrentPositionType) => dispatch({ type: RECEIVE_CURRENT_POSITION, position });
   const receiveActiveInfoWindow = (infoWindow: any) => dispatch({ type: RECEIVE_ACTIVE_INFO_WINDOW, infoWindow });
   const activeInfoWindow = useSelector<InfoWindowState, InfoWindowState['map']>(state => state.map.infoWindow);
+  const receiveActivePlaceId = (placeId: string) => dispatch({ type: RECEIVE_ACTIVE_PLACE_ID, placeId });
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -102,6 +102,7 @@ const App = () => {
 
         window.google.maps.event.addListener(marker, 'click', () => {
           setClickedMarker({ marker, place });
+          if (place.place_id) receiveActivePlaceId(place.place_id);
         });
       }
 
@@ -124,7 +125,8 @@ const App = () => {
       new window.google.maps.Marker({
         map,
         icon,
-        position: currentPosition
+        position: currentPosition,
+        title: 'Current Location'
       });
     }
   }, [map]);
@@ -137,13 +139,21 @@ const App = () => {
       if (activeInfoWindow) activeInfoWindow.close();
 
       const contentString = `
-        <div style='background-image: url(${place.photos[0].getUrl()}); 
-          background-size: 100%;
-          width: 100px; 
-          height: 100px;'>
+        <div style='padding: 5px;'>
+          <div style='background-image: url(${place.photos[0].getUrl()}); 
+            background-size: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 100%; 
+            min-width: 120px;
+            min-height: 120px;
+            border-radius: 3px;
+            margin-bottom: 10px;'>
+          </div>
+          <p style='margin-bottom: 5px; font-weight: 500;'>${place.name}</p>
+          <p style='margin-bottom: 5px;'>9 mins (walk)</p>
+          <p><img src="https://img.icons8.com/office/16/000000/rating.png"/> ${place.rating}</p>
         </div>
-        <h1>${place.name}</h1>
-        <h2>${place.rating}</h2>
       `
 
       infoWindow.setContent(contentString);
