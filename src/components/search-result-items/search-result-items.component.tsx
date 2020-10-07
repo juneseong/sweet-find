@@ -51,7 +51,7 @@ const SearchResultItems: React.FC<SearchResultItemsProps> = ({ place, number }) 
         if (place.place_id) receiveActivePlaceId(place.place_id);
     }
 
-    if (place.photos && place.rating && place.vicinity) {
+    if (place.photos && place.rating !== undefined && place.vicinity) {
         const address = place.vicinity.split(',')[0];
 
         return (
@@ -68,7 +68,7 @@ const SearchResultItems: React.FC<SearchResultItemsProps> = ({ place, number }) 
                         <div className='address'>{address} · 9 mins</div>
                     </div>
                     <div className={`rating ${place.rating >= 4.5 ? 'high' : ''}`}>
-                        {place.rating === 0 ? 'New' : place.rating.toFixed(1)}
+                        {place.rating === 0 ? <span className='new'>NEW</span> : place.rating.toFixed(1)}
                     </div>
                 </div>
             </div>
