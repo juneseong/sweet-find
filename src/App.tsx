@@ -162,23 +162,30 @@ const App = () => {
     }
   }, [clickedMarker]);
 
-  const [width, setWidth] = useState(45);
-  const [dragging, setDragging] = useState(false);
+  const [width, setWidth] = useState<number>(50);
+  const [dragging, setDragging] = useState<boolean>(false);
+  const [cursor, setCursor] = useState<string>('auto');
+  const [lineColor, setLineColor] = useState<string>('#ddd');
 
   const handleDrag = (e: React.MouseEvent) => {
-    e.preventDefault();
-
     if (dragging) {
       const clientWidth = document.documentElement.clientWidth;
       const currentWidth = e.pageX;
-      const currentPosition = (currentWidth / clientWidth) * 100;
-      setWidth(currentPosition);
+      const currentPosition = (currentWidth / clientWidth) * 100 + 1;
+
+      if (currentWidth > 450 && currentPosition <= 50) {
+        setWidth(currentPosition);
+      }
     }
   }
 
   return (
-    <div className='app' onMouseMove={handleDrag}>
-      <SideBar width={width} setDragging={setDragging} />
+    <div
+      className='app'
+      onMouseMove={handleDrag}
+      onMouseUp={() => { setDragging(false); setCursor('auto'); setLineColor('#ddd') }}
+      style={{ cursor: `${cursor}` }}>
+      <SideBar width={width} lineColor={lineColor} setLineColor={setLineColor} dragging={dragging} setDragging={setDragging} setCursor={setCursor} />
       <GoogleMap status={status} width={width} />
     </div>
   );

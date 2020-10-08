@@ -6,17 +6,28 @@ import CustomSelect from '../custom-select/custom-select.component';
 
 interface SideBarProps {
     width: number;
+    lineColor: string;
+    setLineColor(value: string): void;
+    dragging: boolean;
     setDragging(value: boolean): void;
+    setCursor(value: string): void;
 }
 
-const SideBar: React.FC<SideBarProps> = ({ width, setDragging }) => {
+const SideBar: React.FC<SideBarProps> = ({ width, lineColor, setLineColor, dragging, setDragging, setCursor }) => {
+    const handleDrag = (e: React.MouseEvent) => {
+        setDragging(true);
+        setLineColor('#f18f8f');
+        setCursor('col-resize');
+    }
 
     return (
         <div className='side-bar' style={{ width: `${width}vw` }}>
             <div
                 className='resize-bar'
-                onMouseDown={(e: React.MouseEvent) => { e.preventDefault(); setDragging(true) }}
-                onMouseUp={() => setDragging(false)}
+                onMouseDown={handleDrag}
+                onMouseOver={() => setLineColor('#f18f8f')}
+                onMouseLeave={() => { if (!dragging) setLineColor('#ddd') }}
+                style={{ backgroundColor: `${lineColor}` }}
             />
             <div className='logo-container'>
                 <div className='logo'>

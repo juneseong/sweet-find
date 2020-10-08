@@ -7,16 +7,14 @@
     margin-bottom: 20px;
     border: 1px solid #eee;
     border-radius: 5px;
-    transition: box-shadow 300ms;
 
     &.active {
         background-color: #fafafa;
     }
 
     &:hover {
+        background-color: #fafafa;
         transition: background-color 200ms linear;
-        box-shadow: 0 0 10px rgba(0,0,0,.1);
-        transition: box-shadow 300ms;
     }
 
     &:active {
@@ -28,8 +26,8 @@
     }
 
     .place-photo {
-        width: 90px;
-        height: 90px;
+        width: 120px;
+        height: 120px;
         background-size: cover;
         background-repeat: no-repeat;
         margin-right: 18px;

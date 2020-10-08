@@ -8,11 +8,12 @@
         right: 0;
         height: 100vh;
         width: 1px;
-        cursor: ew-resize;
+        cursor: col-resize;
+        transition: background-color 200ms;
     }
 
     .logo-container {
-        height: 90px;
+        height: 85px;
         padding: 25px 20px;
         display: flex;
         justify-content: space-between;
