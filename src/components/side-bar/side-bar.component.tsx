@@ -15,7 +15,7 @@ const SideBar: React.FC<SideBarProps> = ({ width, setDragging }) => {
         <div className='side-bar' style={{ width: `${width}vw` }}>
             <div
                 className='resize-bar'
-                onMouseDown={() => setDragging(true)}
+                onMouseDown={(e: React.MouseEvent) => { e.preventDefault(); setDragging(true) }}
                 onMouseUp={() => setDragging(false)}
             />
             <div className='logo-container'>

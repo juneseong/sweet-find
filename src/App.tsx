@@ -162,7 +162,7 @@ const App = () => {
     }
   }, [clickedMarker]);
 
-  const [width, setWidth] = useState(35);
+  const [width, setWidth] = useState(45);
   const [dragging, setDragging] = useState(false);
 
   const handleDrag = (e: React.MouseEvent) => {
@@ -179,7 +179,7 @@ const App = () => {
   return (
     <div className='app' onMouseMove={handleDrag}>
       <SideBar width={width} setDragging={setDragging} />
-      <GoogleMap status={status} />
+      <GoogleMap status={status} width={width} />
     </div>
   );
 }
