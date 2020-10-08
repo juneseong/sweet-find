@@ -162,9 +162,23 @@ const App = () => {
     }
   }, [clickedMarker]);
 
+  const [width, setWidth] = useState(35);
+  const [dragging, setDragging] = useState(false);
+
+  const handleDrag = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    if (dragging) {
+      const clientWidth = document.documentElement.clientWidth;
+      const currentWidth = e.pageX;
+      const currentPosition = (currentWidth / clientWidth) * 100;
+      setWidth(currentPosition);
+    }
+  }
+
   return (
-    <div className='app'>
-      <SideBar />
+    <div className='app' onMouseMove={handleDrag}>
+      <SideBar width={width} setDragging={setDragging} />
       <GoogleMap status={status} />
     </div>
   );

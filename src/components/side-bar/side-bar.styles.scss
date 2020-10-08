@@ -1,7 +1,15 @@
 
 .side-bar {
-    width: 35vw;
     height: 100vh;
+    position: relative;
+
+    .resize-bar {
+        position: absolute;
+        right: 0;
+        height: 100vh;
+        width: 1px;
+        cursor: ew-resize;
+    }
 
     .logo-container {
         height: 90px;
